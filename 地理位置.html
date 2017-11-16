@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--地理位置对象navigator.geolocation
+    -->
+    <script>
+        /*地理位置对象navigator.geolocation中有一个获取地理位置的方法getCurrentPosition
+        方法里面有单个参数，获取成功后的回调函数，失败后的回调函数，以及数据收集方式/
+         数据收集:json的形式
+         enableHighAccuracy:更精确的查找,默认false
+         timeout:获取位置允许最长时间,默认infinity
+         maximumAge:位置可以缓存的最大时间,默认是0*/
+        window.onload = function () {
+            var btn = document.querySelector('#askBtn');
+            var t1 = document.querySelector('#t1');
+            btn.onclick = function () {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    t1.value+="经度"+position.coords.longitude+'\n';
+                    t1.value+='维度'+position.coords.latitude+'\n';
+                    t1.value+='准确度'+position.coords.accuracy+'\n';
+                    t1.value+='海拔'+position.coords.altitude+'\n';
+                    t1.value+='海拔准确度'+position.coords.altitudeAccuracy+'\n';
+                    t1.value+='行进方向'+position.coords.heading+'\n';
+                    t1.value+='地面速度'+position.coords.speed+'\n';
+                    t1.value+='时间戳'+new Date(position.timestamp)+'\n';
+                },function(err) {
+                    console.log(err.code);//0,1,2,3,4
+                },
+                        {
+                            enableHighAccuracy:true,
+                            timeout:5000,
+                            maximumAge:5000
+                        })
+            };
+
+
+            /*第二种方法,watchPosition,多次请求,主要用于移动设备,位置改变才会触发偶次请求
+             * 关闭请求clearWatch*/
+            var btn1 = document.querySelector('#askBtn1');
+            var t2 = document.querySelector('#t2');
+            var timer = null;
+            btn1.onclick = function () {
+                timer=navigator.geolocation.watchPosition(function (position) {
+                            t2.value+="经度"+position.coords.longitude+'\n';
+                            t2.value+='维度'+position.coords.latitude+'\n';
+                            t2.value+='准确度'+position.coords.accuracy+'\n';
+                            t2.value+='海拔'+position.coords.altitude+'\n';
+                            t2.value+='海拔准确度'+position.coords.altitudeAccuracy+'\n';
+                            t2.value+='行进方向'+position.coords.heading+'\n';
+                            t2.value+='地面速度'+position.coords.speed+'\n';
+                            t2.value+='时间戳'+new Date(position.timestamp)+'\n';
+                        },function(err) {
+                            console.log(err.code);//0,1,2,3,4
+                    navigator.geolocation.clearWatch(timer);
+                        },
+                        {
+                            enableHighAccuracy:true,
+                            timeout:5000,
+                            maximumAge:5000,
+                            frequency:1000//更新频率,隔一秒请求一次
+                        })
+            };
+        };
+
+    </script>
+</head>
+<body>
+<input id="askBtn" type="button" value="请求">
+<textarea id="t1" name="" cols="30" rows="10"></textarea>
+<input id="askBtn1" type="button" value="请求">
+<textarea id="t2" name=""  cols="30" rows="10"></textarea>
+
+</body>
+</html>

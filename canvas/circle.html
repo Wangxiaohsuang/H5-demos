@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		canvas {
+			border:1px solid black;
+			display: block;
+			margin:0 auto;
+		}
+	</style>
+</head>
+<body>
+<canvas width=600 height= 600 id="canvas"></canvas>
+<script type="text/javascript">
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	/*画弧,参数分别是圆心横坐标,纵坐标,半径,起始弧度,结束弧度(有正负),默认顺时针,第六个参数是true,设为false,则是逆时针*/
+	//ctx.arc(canvas.width/2,canvas.height/2,100,0,-Math.PI/2);
+	ctx.arc(canvas.width/2,canvas.height/2,100,-Math.PI/3,Math.PI*2/3);
+	ctx.stroke();
+
+</script>
+</body>
+</html>

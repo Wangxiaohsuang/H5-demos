@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 400px;
+            height: 400px;
+            background-color: pink;
+        }
+
+    </style>
+
+    <script>
+        /*读取文件*/
+        window.onload = function () {
+            var box = document.querySelector('.box');
+            box.ondragenter= function (ev) {
+                this.innerHTML ='可以释放了'
+            };
+            box.ondragover = function (ev) {
+                ev.preventDefault();
+            };
+            box.ondragleave = function () {
+                this.innerHTML = '将文件拖拽到此区';
+            };
+            box.ondrop=function (ev) {
+                ev.preventDefault();//阻止图片拖拽进去默认打开的行为
+                var fs = ev.dataTransfer.files;//拖拽进去的文件列表,同一个文件可以被放进去多次
+               // alert(fs[0].type);
+                var fd = new FileReader();//创建一个文件读取器
+                fd.readAsDataURL(fs[0]);
+                fd.onload= function () {
+                    alert(this.result);
+                }
+
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div class='box'>将文件拖拽到此区</div>
+</body>
+</html>

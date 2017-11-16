@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1 {
+            width: 400px;
+            height: 400px;
+            border:1px solid #ccc;
+            padding:10px;
+            float: left;
+            margin-right:20px;
+        }
+        #div2 {
+            width: 400px;
+            height: 400px;
+            border:1px solid #ccc;
+            padding:10px;
+            float: left;
+        }
+        textarea {
+            resize: none;
+            margin:10px 0 ;
+            vertical-align: top;
+        }
+        input,textarea {
+            outline:none;
+            border:none;
+            border:1px solid #ccc;
+        }
+        input[type='button'] {
+            background-color:#eee;
+
+        }
+        input[type='button']:active {
+            background-color:skyblue;
+
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var div1 = document.querySelector('#div1');
+            var h = div1.querySelector('input[type=text]');
+            var t1 = div1.querySelector('textarea');
+            var btns = div1.querySelectorAll('input[type=button]');
+            var div2 = document.querySelector('#div2');
+            var ul = div2.querySelector('ul');
+            var iNow = 1;
+           btns[0].onclick = function () {
+               window.localStorage.setItem('title'+iNow, h.value);
+               window.localStorage.setItem('content'+iNow, t1.value);
+               h.value='';
+              t1.value='';
+               createList();
+               iNow++;
+               window.localStorage.setItem('num',iNow);
+           };
+            function createList() {
+                var li = document.createElement('li');
+                li.innerHTML = window.localStorage.getItem('title'+iNow);
+                ul.appendChild(li);
+
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+    标题<input type="text" /> <br />
+    内容<textarea id="t1" style="width:300px;height:300px;"></textarea> <br />
+    <input type="button" value="保存本地">
+    <input type="button" value="同步服务器">
+    <input type="button" value="删除所有数据">
+    <input type="checkbox" />记录地图位置
+
+</div>
+<div id="div2">
+    <!--右边盒子有三个页面,第一个页面是日志标题列表,点击标题,可以切换到具体的日记的内容          ii+-->
+    <ul>
+        <li>
+            <ul></ul>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas画图</title>
+</head>
+<body>
+<canvas width=600 height=600 id="canvas"></canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		var img = new Image();
+		//img.src='rBACFFH1-B7DFB4PAAAYpkS1Sv4882_200x200_3.jpg';
+		img.src="./DMMban.png";
+		img.onload = function () {
+			var width = img.width/4;
+			var height = img.height/4;
+			var i = 0;
+			setInterval(function () {
+				ctx.clearRect(0,0,canvas,width,canvas.height);
+				ctx.drawImage(img,width*(i%4),0,width,height,100,100,width,height);
+				i++;
+			},500);
+			/*图片会按照传递的宽高进行缩放,因此需要计算出图片的宽高比例,按照比例来设置宽高*/
+		}
+	</script>
+</body>
+</html>

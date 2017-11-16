@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">	
+	canvas {
+			border:1px solid black;
+			display: block;
+			
+			margin:0 auto;
+		}
+	</style>
+</head>
+<body>
+<canvas width=600 height=600 id="canvas"></canvas>
+<script>
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	function toRadien(anger) {
+		return anger/180*Math.PI;
+	}
+	var start = -90;
+	var step = 120;
+	var colors='red,pink,lightblue,purple,orange,lightgreen'.split(',');
+	var x= 300,y=300,r=100,distance=60,line=50;
+	var x2,y2;
+	var texts =['fgewkfanbskjdfg','458fheuf','3refhew'];
+	var paddingY=10;
+	var paddingX=10;
+	for(var i = 0;i<3;i++) {
+		ctx.beginPath();
+		ctx.fillStyle=colors[i];
+		ctx.moveTo(x,y);
+		ctx.arc(x,y,r,toRadien(start),toRadien(start+step));
+		ctx.fill();
+		x0=x+ r*Math.cos(toRadien(start+step/2));
+		y0=y+r*Math.sin(toRadien(start+step/2));
+		x1=x+(r+distance)*Math.cos(toRadien(start+step/2));
+		y1=y+(r+distance)*Math.sin(toRadien(start+step/2));
+		var line = ctx.measureText(texts[i]).width;
+		paddingX=(start+step/2)>=-90&&(start+step/2)<=90?paddingX:-paddingX;
+		line = (start+step/2)>=-90&&(start+step/2)<=90?line+2*paddingX:-line+2*paddingX;
+		x2= x1+line;
+		y2= x2;	
+		ctx.beginPath();
+		ctx.moveTo(x0,y0);
+		ctx.lineTo(x1,y1);
+		ctx.lineTo(x2,y1);
+		ctx.strokeStyle="black";
+		ctx.stroke();
+		var anger = start+step/2;
+		if(anger>=-90&&anger<=90) {
+			ctx.textAlign="left"
+		}
+		if(anger>90&&anger<270) {
+			ctx.textAlign="right";
+		}
+		ctx.strokeText(texts[i],x1+paddingX,y1-paddingY);
+		start+=step;
+		
+	}
+</script>	
+</body>
+</html>

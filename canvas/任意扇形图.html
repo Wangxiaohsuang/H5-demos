@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>扇形图制作</title>
+	<style type="text/css">
+		canvas {
+			border:1px solid black;
+			display: block;
+			margin:0 auto;
+		}
+
+	</style>
+</head>
+<body>
+<canvas width=600 height=600 id="canvas"></canvas>
+<script type="text/javascript">
+	function drawSan(options) {
+		function toRadien(anger) {
+		return Math.PI*anger/180;
+		}
+		var startAnger=-90;
+		var dis= options.dis||80;
+		var paddingY=5;
+		var paddingX=5;
+		var sum=0;
+		options.data.forEach(function(v) {
+			sum+=v;
+		});
+		var data2 = options.data.map(function(v,i){
+			var percent=(v/sum*100).toFixed(options.n)+'%';
+			return  {value:v,anger:v/sum*360,percent:percent};
+		});
+		data2.forEach(function(v,i) {
+			var ctx=options.ctx;
+			ctx.beginPath();
+			var x = options.point.x;
+			var y = options.point.y;
+			var r = options.r;
+			ctx.moveTo(x,y);
+			ctx.arc(x,y,r,toRadien(startAnger),toRadien(startAnger+v.anger));
+			ctx.fillStyle=options.colors[i];
+			ctx.fill();
+			var x1 = x+r*Math.cos(toRadien(startAnger+v.anger/2));
+			var y1=  y+r*Math.sin(toRadien(startAnger+v.anger/2));
+			var x2 = x+(dis+r)*Math.cos(toRadien(startAnger+v.anger/2));
+			var y2= y+(dis+r)*Math.sin(toRadien(startAnger+v.anger/2));
+			var line = ctx.measureText(v.percent).width;
+			var textAlign='left';
+			if((startAnger+v.anger/2)>90&&(startAnger+v.anger/2)<=270) {
+				line=-ctx.measureText(v.percent).width;
+				paddingX=-10;
+				textAlign='right';
+			}
+			var x3 = x2+line+paddingX*2;
+			var y3 = y2;
+			ctx.beginPath();
+			ctx.moveTo(x1,y1);
+			ctx.lineTo(x2,y2);
+			ctx.lineTo(x3,y3);
+			ctx.strokeStyle=options.colors[i];
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.textAlign=textAlign;
+			ctx.fillStyle='black';
+			ctx.fillText(v.percent,x2+paddingX,y2-paddingY);
+			startAnger+=v.anger;
+		});
+	}
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		drawSan({
+			ctx:ctx,
+			colors:['red','lightgreen','blue','yellow','purple','pink','tan'],
+			data:[123,343,56,778,76,10,100],
+			r:100,//圆心半径
+			point:{x:300,y:300},//圆心坐标
+			n:2,//百分比保留小数点位数
+			dis:60//伸展出来的斜线长度，不包括半径
+		});
+
+</script>
+</body>
+</html>

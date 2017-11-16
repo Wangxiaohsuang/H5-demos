@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas width=600 height=600 id="canvas"></canvas>
+		<script>
+			function Rect(config) {
+				this.x = config.x;
+				this.y = config.y;
+				this.width = config.width;
+				this.height = config.height;
+				this.ctx = config.ctx;
+				//optional
+				this.fillStyle= config.fillStyle;
+				this.strokeStyle= config.strokeStyle;
+				this.lineWidth = config.lineWidth;
+				
+			}
+			Rect.prototype = {
+				constructor:Rect,
+				stroke:function() {
+					if(this.strokeStyle) {
+						this.ctx.strokeStyle=this.strokeStyle;
+					}
+					this.ctx.strokeRect(this.x,this.y,this.width,this.height);									
+				},
+				fill:function() {
+					if(this.fillStyle) {
+						this.ctx.fillStyle = this.fillStyle;
+					}
+					this.ctx.fillRect(this.x,this.y,this.width,this.height);
+				}
+			}
+			var canvas = document.getElementById('canvas');
+			var ctx = canvas.getContext('2d');
+			var rect = new Rect({
+				ctx:ctx,
+				x:0,
+				y:0,
+				width:100,
+				height:100,
+				strokeStyle:'red'
+			});
+			rect.stroke();
+		</script>
+	</body>
+</html>

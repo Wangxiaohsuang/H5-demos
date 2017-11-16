@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        li {
+            width: 100px;
+            height: 30px;
+            background-color: yellow;
+            margin-bottom: 20px;
+            list-style: none;
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        /*拖拽事件
+         * 拖拽元素的事件:事件对象为被拖拽的元素
+         * dragstart:开始拖拽瞬间触发
+         * drag拖拽前,拖拽结束之间,连续触发
+         * dragend 拖拽结束触发
+         *
+         * 目标元素事件
+         * ondragenter:进入目标元素触发
+         * dragover 进入目标,离开目标之间,连续触发
+         * dragleave离开目标元素触发
+         * drop在目标元素上释放鼠标触发,但是前提是要在dragover中阻止默认事件*/
+
+        /*拖放事件:drop不触发*/
+        /*在火狐下必须设置dataTransfer对象的setData才可以拖拽除图片外的其他标签
+        * dataTransfer对象有如下方法
+        * setData(key,value) 注意,必须是字符串,对应的为getDate()
+        * setDragImage 三个参数,指定的元素,坐标x,坐标y
+        * files
+        * 获取外部拖拽的文件,得到一个文件列表filelist*/
+        window.onload = function () {
+            var lis = document.querySelectorAll('li');
+            var count = 0;
+            var box = document.querySelector('.box');
+            for (var i = 0; i < lis.length; i++) {
+                lis[i].ondragstart = function (ev) {
+                    this.style.backgroundColor = 'green';
+                    console.log(ev.dataTransfer);
+                    //DataTransfer {dropEffect: "none", effectAllowed: "uninitialized", items: DataTransferItemList, types: Array(0), files: FileList}
+                    ev.dataTransfer.setDragImage(box,0,0);//可以设置成一个图片,将图片放再页面结构中,设置鱼片display;none,然后拖拽li,那么拖拽的东西马上回变成一个图片
+                };
+                lis[i].ondrag = function () {
+                    count++;
+                    document.title = count;
+                    this.style.backgroundColor = 'purple';
+                };
+                lis[i].ondragend = function (ev) {
+                    this.style.backgroundColor = 'orange';
+                };
+            }
+
+            box.ondragenter = function () {
+                this.style.backgroundColor = 'pink';
+            };
+            box.ondragleave = function () {
+                this.style.backgroundColor = 'red';
+            };
+            box.ondragover = function (ev) {
+                ev.preventDefault();
+            }
+            box.ondrop = function () {
+                    alert(123);
+            }
+
+
+        }
+    </script>
+</head>
+<body>
+<ul>
+    <li draggable="true">a</li>
+    <li draggable="true">b</li>
+    <li draggable="true">c</li>
+</ul>
+<div class="box"></div>
+
+</body>
+</html>

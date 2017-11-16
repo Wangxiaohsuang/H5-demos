@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		canvas {
+			display: block;
+			margin:0 auto;
+			border：1px solid black;
+		}
+	</style>
+</head>
+<body>
+<canvas width=600 height=600 id="canvas"></canvas>
+<script type="text/javascript">
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	function toRadien(anger) {
+		return anger/180*Math.PI;
+	}
+	var data =[11,34,100,345,57,78];
+	var sum =0;
+	data.forEach(function(v) {
+			sum+=v;
+	});
+	var colors='red,pink,lightblue,purple,orange,lightgreen'.split(',');
+	var data2 = data.map(function(v,i) {
+		return {value:v,anger:v*360/sum,percent:toFixed(v/sum/360),2)};
+	});
+	var start=-90;
+	data2.forEach(function(v,i) {
+		ctx.beginPath();
+		ctx.moveTo(200,200);
+		ctx.arc(200,200,200,toRadien(start),toRadien(start+=v.anger));
+		ctx.fillStyle=colors[i];
+		ctx.fill();
+
+	})
+
+
+</script>	
+</body>
+</html>

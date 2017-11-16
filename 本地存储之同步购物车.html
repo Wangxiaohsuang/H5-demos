@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>同步购物车</title>
+    <script>
+        /*不知道为什么，不可以触发同步*/
+        window.onload = function () {
+            var inputs = document.querySelectorAll('input');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].onclick = function () {
+                    if(this.checked) {
+                        window.localStorage.setItem('picked',this.value);
+                    }else {
+                        window.localStorage.setItem('unpicked',this.value);
+                    }
+                };
+            }
+            window.addEventListener('storage',function (ev) {
+                console.log('aa');
+                if(ev.key=='picked') {
+                    for(var i = 0;i<inputs.length;i++) {
+                        if(ev.newValue==inputs[i].value) {
+                            inputs[i].checked = true;
+                        }
+                    }
+
+                }else if(ev.key=='unpicked') {
+                    for(var i = 0;i<inputs.length;i++) {
+                        if(ev.newValue==inputs[i].value) {
+                            inputs[i].checked = false;
+                        }
+                    }
+                }
+            });
+
+        }
+    </script>
+</head>
+<body>
+<input type="checkbox">苹果
+<input type="checkbox">香蕉
+<input type="checkbox">橘子
+<input type="checkbox">西瓜
+
+</body>
+</html>

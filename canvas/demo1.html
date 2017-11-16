@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            width: 600px;
+            margin:0 auto;
+        }
+        canvas {
+            background-color: skyblue;
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <canvas id="canvas" width=600px height=400px></canvas>
+</div>
+<script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');//获得2维绘图工具
+   /* console.log(ctx);//CanvasRenderingContext2D 绘图的对象
+    ctx.moveTo(100,100);//将画笔移动到这一点,
+    ctx.lineTo(110,100);//再移动到另一点
+    /!*ctx.lineWidth=4;
+    ctx.lineStyle='red';
+    ctx.lineCap='round';//默认是butt,直线的端点*!/
+   /!* ctx.stroke();*!///连接一点,画线
+    ctx.moveTo(120,100);
+    ctx.lineTo(130,100);
+    ctx.stroke();*/
+    /*var startX = 0,
+            startY= 0,
+            stepX = 5,
+            stepY= stepX*2/3;
+    while(startY<400||stepX<600) {
+        if(startY>400){
+            break;
+        }
+        ctx.moveTo(startX,startY);
+        ctx.lineTo(startX+=stepX,startY+=stepY);
+        startX+=3;
+        startY+=2;
+    }
+    ctx.stroke();*/
+   /* ctx.rect(0,0,100,200);
+   // ctx.stroke();
+    ctx.moveTo(200,200);
+    ctx.lineTo(200,300);
+    ctx.lineTo(400,300);
+    ctx.lineTo(200,200);
+   // ctx.stroke();
+    ctx.moveTo(150,150);
+    ctx.lineTo(150,300);
+    ctx.lineTo(300,300);
+    ctx.lineTo(200,150);
+    ctx.lineTo(150,150);
+    ctx.stroke();*/
+    ctx.moveTo(400,200);
+    ctx.lineTo(500,200);
+    ctx.lineTo(550,286);
+    ctx.lineTo(500,372);
+    ctx.lineTo(400,372);
+    ctx.lineTo(350,286);
+    ctx.lineTo(400,200);
+    ctx.stroke();
+
+
+
+
+
+</script>
+
+</body>
+</html>

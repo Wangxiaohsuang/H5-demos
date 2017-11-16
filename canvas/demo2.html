@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		canvas {
+			border:1px solid balck;
+		}
+	</style>
+</head>
+<body>
+<canvas width=500 height=400 id="cas"></canvas>
+<script type="text/javascript">
+	//封装canvas方法
+	var canvas = document.getElementsByTagName('canvas')[0];
+	var ctx = canvas.getContext('2d');
+	function Line(config) {
+		this.ctx = config.ctx;
+		this.x0 = config.points[0];
+		this.y0 = config.points[1];
+		this.x1 = config.points[2];
+		this.y1 = config.points[3];
+		/*可选的参数*/
+		this.lineWidth=config.lineWidth;
+		this.strokeStyle=config.strokeStyle;
+
+	}
+	Line.prototype= {
+		constructor:Line,
+		paint:function() {
+			this.ctx.beginPath();
+			this.ctx.moveTo(this.x0,this.y0);//定路径
+			this.ctx.lineTo(this.x1,this.y1);//
+			if(this.lineWidth) {
+				this.ctx.lineWidth = this.lineWidth;
+			}if(this.strokeStyle) {
+				this.ctx.strokeStyle= this.strokeStyle;
+			}
+			this.ctx.stroke();//调用canvas的绘图才可以绘制
+		}
+	};
+	var c1 = new Line({ctx:ctx,points:[100,200,300,400]});
+	c1.paint();
+
+
+
+</script>
+</body>
+</html>

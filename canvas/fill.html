@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas {
+            background-color: lightblue;
+            border:1px solid black;
+
+        }
+    </style>
+</head>
+<body>
+<canvas width=400 height = 400 id="canvas"></canvas>
+<script>
+    var ctx = document.getElementById('canvas').getContext('2d');
+    /*ctx.moveTo(100,100);
+    ctx.lineTo(400,100);
+    ctx.lineTo(400,400);
+    ctx.lineTo(100,400);
+    ctx.lineTo(100,100);
+    ctx.moveTo(250,150);
+    ctx.lineTo(150,200);
+    ctx.lineTo(200,200);
+    ctx.lineTo(200,300);
+    ctx.lineTo(300,300);
+    ctx.lineTo(300,200);
+    ctx.lineTo(350,200);
+    ctx.lineTo(250,150);
+    ctx.fill();//fill填充,非零环绕,*/ //零不填充,非零填充
+    //闭合的时候用closePath,
+
+    //每次改变状态的时候需要设置beginPath,不然就是同一状态,canvas是基于状态进行绘图的
+    ctx.moveTo(100,100);
+    ctx.lineTo(100,300);
+    ctx.setLineDash([10,5]);//实线虚线交替
+    ctx.setDashOffset=-10;
+    ctx.strokeStyle='red';
+    ctx.stroke();
+    ctx.beginPath();
+
+
+
+
+
+</script>
+</body>
+</html>

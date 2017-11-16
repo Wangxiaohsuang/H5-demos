@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        form {
+            width:500px;
+            margin:0 auto;
+        }
+        form>fieldset {
+            padding:10px;
+            border:none;
+            border-bottom:1px solid black;
+            position: relative;
+        }
+        form>fieldset>legend {
+            display:block;
+           /* width: 100%;
+            text-align: center;
+            background-color: yellow;*/
+          
+            position:absolute;
+            top:100%;
+            margin-top:-10px;
+            left:50%;
+            margin-left:-40px;
+            background-color: white;
+        }
+        form>fieldset>input,form>fieldset>meter {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            border:none;
+            border:1px solid #ccc;
+            border-radius: 4px;
+            margin:10px 0;
+            box-sizing: border-box;
+            padding-left:10px;
+        }
+        form>fieldset>meter {
+            padding-left:0;
+        }
+
+        ::-webkit-input-placeholder {
+            color:#58a;
+        }
+        :-ms-input-placeholder {
+            color:#58a;
+        }
+        ::-moz-placeholder {
+            color:#58a;
+        }
+        :-moz-placeholder {
+            color:#58a;
+        }
+    </style>
+</head>
+<body>
+<form action="">
+    <fieldset>
+        <legend>学生档案</legend>
+        <label for="username">姓名:</label>
+        <input type="text" id='username' placeholder='请输入用户名'>
+        <label for="tel">手机号码:</label>
+        <input type="tel" id='tel'>
+        <label for="email">邮箱地址:</label>
+        <input type="email" id='email'>
+        <label for="school">所属学院:</label>
+        <input type="text" placeholder='请选择' id='school' list = 'lists'>
+        <datalist id='lists'>
+            <option value="前端开发"></option>
+            <option value="java"></option>
+            <option value="php"></option>
+        </datalist>
+        <label for="score">成绩</label>
+        <input id='score' type="number" value='0' min='0' max='100'>
+        <label for="level"></label>
+        <meter id='level' value='0' min='0' max='100' low='59' high='90'></meter>
+        <label for="intime">入学日期:</label>
+        <input type="date" id='intime'>
+        <label for="leavetime">毕业日期:</label>
+        <input type="date" id='leavetime'>
+        <input type="submit" value='提交'>
+
+    </fieldset>
+</form>
+<script>
+    var score = document.getElementById('score');
+    score.oninput= function () {
+        document.getElementById('level').value = this.value;
+    };
+
+</script>
+</body>
+</html>

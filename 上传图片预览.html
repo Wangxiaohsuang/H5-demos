@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 400px;
+            height: 400px;
+            background-color: pink;
+        }
+        body,ul,li {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            width: 800px;
+            overflow:hidden;
+            list-style: none;
+        }
+        li {
+            width: 25%;
+            float: left;
+        }
+        ul li img {
+            display: block;
+            max-width:100%;
+        }
+    </style>
+
+    <script>
+        /*读取文件*/
+        window.onload = function () {
+            var box = document.querySelector('.box');
+            var ul = document.querySelector('ul');
+            box.ondragenter = function (ev) {
+                this.innerHTML = '可以释放了';
+            };
+            box.ondragover = function (ev) {
+                ev.preventDefault();
+            };
+            box.ondragleave = function () {
+                this.innerHTML = '将文件拖拽到此区';
+            };
+            box.ondrop = function (ev) {
+                ev.preventDefault();//阻止图片拖拽进去默认打开的行为
+                this.innerHTML = '将文件拖拽到此区';
+                var files = ev.dataTransfer.files;//拖拽进去的文件列表,同一个文件可以被放进去多次
+                for (var i = 0; i < files.length; i++) {
+                    if (files[i].type.indexOf('image') == -1) {
+                        alert('请上传图片类型的文件');
+
+                    } else {
+                        var fd = new FileReader();//创建一个文件读取器
+                        fd.readAsDataURL(files[i]);
+                        /*还有一个小bug,如何刷选重复的图片,做出重复图片不上传的功能*/
+                        fd.onload = function () {
+                            var li = document.createElement('li');
+                            var image = document.createElement('img');
+                           image.src = this.result;
+                            console.log(image.src);
+                            ul.appendChild(li);
+                            li.appendChild(image);
+                        }
+                    }
+
+                }
+
+                }
+
+
+        }
+
+    </script>
+</head>
+<body>
+<div class='box'>将文件拖拽到此区</div>
+<ul></ul>
+</body>
+</html>

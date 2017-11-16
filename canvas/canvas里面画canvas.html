@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas width="600" height="600" id="canvas"></canvas>
+		<script>
+			/*canvas里面可以继续添加canvas,这样可以提升性能*/
+			var canvas = document.getElementById('canvas');
+			var ctx = canvas.getContext('2d');
+			var can = document.createElement('canvas');
+			var ct = can.getContext('2d');
+			ct.fillRect(0,0,100,100);
+			ctx.drawImage(can,100,100);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas {
+			border:1px solid black;
+			display: block;
+			
+			margin:0 auto;
+		}
+		div {
+			width:100px;
+			height: 100px;
+			border:1px solid black;
+			box-shadow:0 0 0 4px #ccc;
+			text-shadow: 0 0 10px #666;
+			text-align: center;
+			font-size:40px;
+		}
+	</style>
+</head>
+<body>
+<canvas width=600 height=600 id="canvas"></canvas>
+<div>我</div>
+<script type="text/javascript">
+	/*textAlign left center right
+	textBaseline top middle bottom
+	font属性*/
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	ctx.fillStyle="red";
+	ctx.arc(100,100,2,0,2*Math.PI);
+	ctx.fill();
+	ctx.beginPath();
+	ctx.font=" 18px consolas";
+	ctx.fillStyle="black";
+	ctx.textAlign="right";
+	ctx.textBaseline="top";
+	ctx.fillText('Javascript',100,100);
+</script>
+	
+</body>
+</html>

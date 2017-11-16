@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .goodsList ul {
+            overflow: hidden;
+            list-style: none;
+        }
+
+        .goodsList ul li {
+            width: 200px;
+            float: left;
+            border: 1px solid black;
+            margin: 10px;
+        }
+
+        .goodsList li img {
+            width: 200px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .shoppingList {
+            width: 800px;
+            height: 300px;
+            border: 1px solid black;
+            margin-left: 20px;
+        }
+        .shoppingList li {
+            border-bottom:1px dashed black;
+            overflow: hidden;
+            position:relative;
+        }
+        .shoppingList li span {
+            float: left;
+            width: 33.3%;
+        }
+        .shoppingList li button {
+            position: absolute;
+            right:10px;
+            bottom:0;
+        }
+
+        .total-money {
+            text-align: right;
+        }
+    </style>
+    <script>
+
+        /*图片默认可拖拽，其他元素要想拖拽，需要设置draggable为true*/
+        window.onload = function () {
+            var goodsList = document.querySelector('.goodsList');
+            var shoppingList = document.querySelector('.shoppingList');
+            var ul = shoppingList.querySelector('ul');
+            var lis = goodsList.querySelectorAll('li');
+            var json = {};//需要一个对象来判断书籍的加入情况
+            var totalDiv = document.querySelector('.total-money');
+            var Allmoney = 0;
+            var num = 0;
+            for (var i = 0; i < lis.length; i++) {
+                lis[i].ondragstart = function (ev) {
+                    //ev.target.parentNode--li
+                    li = ev.target.parentNode;
+                    var title = li.querySelector('h4').innerHTML;
+                    var price = li.querySelector('span').innerHTML;
+                    ev.dataTransfer.setData('title', title);
+                    ev.dataTransfer.setData('price', price);
+                    ev.dataTransfer.setDragImage(li, 0, 0);
+                }
+            }
+            shoppingList.ondragover = function (ev) {
+                ev.preventDefault();
+            };
+            shoppingList.ondrop = function (ev) {
+                ev.preventDefault();//防止默认打开
+                /*如果存在当前书籍，再拉会加数量，并且底部的总价也会更新*/
+                var title = ev.dataTransfer.getData('title');
+                if (!json[title]) {
+                   // alert(123);
+                    var li = document.createElement('li');
+                    ul.appendChild(li);
+                    var span = document.createElement('span');
+                    span.innerHTML = 1;
+                    span.className = 'box1';
+                    li.appendChild(span);
+                    var span = document.createElement('span');
+                    span.className = 'box2';
+                    span.innerHTML = ev.dataTransfer.getData('title');
+                    li.appendChild(span);
+                    var span = document.createElement('span');
+                    span.className = 'box3';
+                    span.innerHTML = ev.dataTransfer.getData('price');
+                    li.appendChild(span);
+                    json[title] = 1;
+                    var btn = document.createElement('button');
+                    btn.innerHTML="删除";
+                    //li.appendChild(btn);
+                    /*购物车里面已经有了,那么再添加一次,数量就加1*/
+                } else {
+                    var Allbox1 = shoppingList.querySelectorAll('.box1');
+                    var Allbox2 = shoppingList.querySelectorAll('.box2');
+                    for (var i = 0;i<Allbox2.length;i++) {
+                        if(title==Allbox2[i].innerHTML) {
+                          Allbox1[i].innerHTML =  parseInt(Allbox1[i].innerHTML)+1;
+                        }
+                    }
+
+                }
+                /*求出总价*/
+              /*我想的就是很笨的方法啊,循环,求积再求和,但是还有更简单的方法,每次拖拽,
+              不论是之前有没有重复的书,拖一个进去,钱就加一次
+              * 因此可以每次拖拽时将金钱存进去,然后累加求和*/
+                var money = parseInt(ev.dataTransfer.getData('price'));
+                Allmoney +=money;
+                totalDiv.innerHTML =Allmoney + '￥';
+                var Allbox3 = shoppingList.querySelectorAll('.box3');
+                for (var i = 0;i<Allbox3.length;i++) {
+
+                }
+
+
+            }
+
+        }
+        /*这个购物车还想做点扩展,比如在购物清单里面添加一个删除按钮,回去再想吧*/
+
+    </script>
+</head>
+<body>
+<div class="goodsList">
+    <ul>
+        <li draggable="true">
+            <img src="images/img1.jpg" alt="">
+            <h4>javasciprt语言精粹</h4>
+            <span>40&yen;</span>
+        </li>
+        <li draggable="true">
+            <img src="images/img2.jpg" alt="">
+            <h4>javascript权威指南</h4>
+            <span>120&yen;</span>
+        </li>
+        <li draggable="true">
+            <img src="images/img3.jpg" alt="">
+            <h4>精通javascript</h4>
+            <span>35&yen;</span>
+        </li>
+        <li draggable="true">
+            <img src="images/img4.jpg" alt="">
+            <h4>javasciptDOM编程艺术</h4>
+            <span>45&yen;</span>
+        </li>
+    </ul>
+</div>
+<div class="shoppingList">
+    <ul>
+         <!--li>
+             <span class="box1">1</span>
+             <span class="box2">javasciprt语言精粹</span>
+             <span class="box3"></span>
+             <button>删除</button>
+         </li>
+          <li>
+             <span class="box1"></span>
+             <span class="box2"></span>
+             <span class="box3"></span>
+         </li>-->
+
+    </ul>
+    <div class="total-money"></div>
+</div>
+
+
+</body>
+</html>
